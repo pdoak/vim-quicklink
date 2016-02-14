@@ -37,6 +37,11 @@ function! ConvertVisualSelectionToLink(...)
   normal! `m
 endfunction
 
+function! ConvertVisualSelectionToLinkinLine(...)
+    let @c=a:1
+  execute 'normal! "lc[l]()'
+endfunction
+
 function! s:SearchForTerm()
   let search_prompt = "Search term (leave blank to use clipboard): "
   echohl String | let term = input(search_prompt, @v) | echohl None
@@ -64,12 +69,13 @@ function! s:DisplaySearchResults(results)
   setlocal nowrap
   nnoremap <buffer> q :q!<cr>
   nnoremap <buffer> <cr> :call SelectSearchResult()<cr>
+  nnoremap <buffer> <s-cr> :call SelectSearchResultinLine()<cr>
   nnoremap <buffer> <C-o> :normal! gx<cr>
   nnoremap <buffer> <C-n> 2j
   nnoremap <buffer> <C-p> 2k
   nnoremap <buffer> <tab> :call search('^\S')<cr>:noh<cr>
   nnoremap <buffer> <S-tab> :call search('^\S', 'b')<cr>:noh<cr>
-  nnoremap <buffer> o :normal! gx<cr>
+  nnoremap <buffer> o :normal gx<cr>
   normal! ggdG
   call append(0, formatted)
   normal! ddgg
@@ -103,6 +109,12 @@ function! SelectSearchResult()
   let selected = g:search_results[line('.') / 3].url
   bdelete
   call ConvertVisualSelectionToLink(selected)
+endfunction
+
+function! SelectSearchResultinLine()
+  let selected = g:search_results[line('.') / 3].url
+  bdelete
+  call ConvertVisualSelectionToLinkinLine(selected)
 endfunction
 
 function! s:OnMarkdownLink()
