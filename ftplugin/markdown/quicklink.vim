@@ -69,7 +69,7 @@ function! s:DisplaySearchResults(results)
   setlocal nowrap
   nnoremap <buffer> q :q!<cr>
   nnoremap <buffer> <cr> :call SelectSearchResult()<cr>
-  nnoremap <buffer> <s-cr> :call SelectSearchResultinLine()<cr>
+  nnoremap <buffer> <M-l> :call SelectSearchResultinLine()<cr>
   nnoremap <buffer> <C-o> :normal! gx<cr>
   nnoremap <buffer> <C-n> 2j
   nnoremap <buffer> <C-p> 2k
