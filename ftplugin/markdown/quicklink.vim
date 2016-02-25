@@ -38,8 +38,13 @@ function! ConvertVisualSelectionToLink(...)
 endfunction
 
 function! ConvertVisualSelectionToLinkinLine(...)
-    let @c=a:1
-  execute 'normal! "lc[l]()'
+  if a:0 == 0
+    echo 'error'
+  else
+    let @c = a:1
+  endif
+  normal! gv
+  execute 'normal! "lc[l](c)'
 endfunction
 
 function! s:SearchForTerm()
@@ -115,6 +120,7 @@ function! SelectSearchResultinLine()
   let selected = g:search_results[line('.') / 3].url
   bdelete
   call ConvertVisualSelectionToLinkinLine(selected)
+  " call ConvertVisualSelectionToLink(selected)
 endfunction
 
 function! s:OnMarkdownLink()
